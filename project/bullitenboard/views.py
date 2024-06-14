@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView,DetailView, CreateView, UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .forms import PostForm
 from .models import Post, UserResponse
@@ -55,7 +56,8 @@ class PostDetail(DetailView):
     context_object_name = 'post_detail'
 
 # Добавляем новое представление для создания товаров.
-class PostCreate(CreateView):
+class PostCreate(LoginRequiredMixin, CreateView):
+    raise_exception = True
     # Указываем нашу разработанную форму
     form_class = PostForm
     # модель товаров
