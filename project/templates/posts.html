@@ -14,6 +14,11 @@ POst
        <input type="submit" value="Найти" />
    </form>
    <hr>
+{# Теперь будем проверять не request.user.is_authenticated, а конкретные права #}
+    {% if perms.simpleapp.add_product %}
+    <a href="{% url 'post_create' %}">Добавить товар</a>
+    {% endif %}
+
    {% if posts %}
        <table>
            <tr>
@@ -21,6 +26,11 @@ POst
                <td>Описание</td>
                <td>Категория</td>
                <td>Дата</td>
+
+                {# Условие получается составным. #}
+                {% if perms.bullitenboard.post_create%}
+                <td>Действия</td>
+                {% endif %}
            </tr>
 
            <!-- Для каждого товара будете генерироваться новая строчка,
@@ -37,6 +47,12 @@ POst
                <td>{{ post.text }}</td>
                <td>{{ post.category }}</td>
                <td>{{post.dateCreation}}</td>
+               <td>
+                    {# А здесь доступ для каждой ссылки теперь будем проверять отдельно #}
+                    {% if perms.simpleapp.change_product %}
+                    <a href="{% url 'post_update' pk=post.id %}">Изменить</a>
+                    {% endif %}
+                </td>
            </tr>
            {% endfor %}
 

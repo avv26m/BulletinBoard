@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView,DetailView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 from .forms import PostForm
 from .models import Post, UserResponse
@@ -56,7 +57,7 @@ class PostDetail(DetailView):
     context_object_name = 'post_detail'
 
 # Добавляем новое представление для создания товаров.
-class PostCreate(LoginRequiredMixin, CreateView):
+class PostCreate(PermissionRequiredMixin,  CreateView):
     raise_exception = True
     # Указываем нашу разработанную форму
     form_class = PostForm
@@ -64,8 +65,9 @@ class PostCreate(LoginRequiredMixin, CreateView):
     model = Post
     # и новый шаблон, в котором используется форма.
     template_name = 'post_create.html'
+    permission_required = ('bullitenboard.post_create')
 
-class PostEdit(UpdateView):
+class PostEdit(PermissionRequiredMixin, UpdateView):
     # Указываем нашу разработанную форму
     form_class = PostForm
     # модель товаров
@@ -73,3 +75,4 @@ class PostEdit(UpdateView):
     # и новый шаблон, в котором используется форма.
     template_name = 'post_create.html'
     success_url = reverse_lazy('post')
+    permission_required = ('bullitenboard.post_update')
