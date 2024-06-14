@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.flatpages',
     'bullitenboard',
+    'django_filters',
 
 ]
 

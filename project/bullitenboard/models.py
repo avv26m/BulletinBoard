@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 from ckeditor_uploader.fields import RichTextUploadingField
 
@@ -24,7 +25,10 @@ class Post(models.Model):
     text = models.TextField()
 
     def __str__(self):
-        return f'{self.id} : {self.title}'
+        return f'{self.id} : {self.title} : {self.text}'
+
+    def get_absolute_url(self):
+        return reverse('post_detail', args=[str(self.id)])
 
 class UserResponse(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -34,4 +38,5 @@ class UserResponse(models.Model):
     status = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'{self.author}: {self.text}'
+        return f'{self.author}: {self.text[:10]}'
+
