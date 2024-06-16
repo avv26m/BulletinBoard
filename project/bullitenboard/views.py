@@ -44,8 +44,8 @@ class PostList(ListView):
 class UserResponseList(ListView):
     model = UserResponse
     ordering = '-response_time'
-    template_name = 'response.html'
-    context_object_name = 'response'
+    template_name = 'responses.html'
+    context_object_name = 'responses'
     paginate_by = 2
 
 class PostDetail(DetailView):
