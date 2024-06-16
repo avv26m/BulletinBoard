@@ -4,7 +4,7 @@ from django.views.generic import ListView,DetailView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
 
-from .forms import PostForm
+from .forms import PostForm, UserResponseForm
 from .models import Post, UserResponse
 from .filters import PostFilter
 class PostList(ListView):
@@ -56,6 +56,7 @@ class PostDetail(DetailView):
     # Название объекта, в котором будет выбранный пользователем продукт
     context_object_name = 'post_detail'
 
+
 # Добавляем новое представление для создания товаров.
 class PostCreate(PermissionRequiredMixin,  CreateView):
     raise_exception = True
@@ -73,6 +74,13 @@ class PostEdit(PermissionRequiredMixin, UpdateView):
     # модель товаров
     model = Post
     # и новый шаблон, в котором используется форма.
-    template_name = 'post_create.html'
+    template_name = 'post_edit.html'
     success_url = reverse_lazy('post')
-    permission_required = ('bullitenboard.post_update')
+    permission_required = ('bullitenboard.post_edit')
+
+class ResponseCreate(PermissionRequiredMixin, CreateView):
+    raise_exception = True
+    form_class = UserResponseForm
+    model = UserResponse
+    template_name = 'response_create.html'
+    success_url = reverse_lazy('posts')

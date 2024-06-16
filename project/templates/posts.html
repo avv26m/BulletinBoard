@@ -1,7 +1,7 @@
 {% extends 'flatpages/default.html' %}
 
 {% block title %}
-POst
+Post
 {% endblock title %}
 
 {% block content %}
@@ -15,8 +15,8 @@ POst
    </form>
    <hr>
 {# Теперь будем проверять не request.user.is_authenticated, а конкретные права #}
-    {% if perms.simpleapp.add_product %}
-    <a href="{% url 'post_create' %}">Добавить товар</a>
+    {% if perms.bullitenboar.post_create %}
+    <a href="{% url 'post_create' %}">Добавить объявление</a>
     {% endif %}
 
    {% if posts %}
@@ -49,8 +49,9 @@ POst
                <td>{{post.dateCreation}}</td>
                <td>
                     {# А здесь доступ для каждой ссылки теперь будем проверять отдельно #}
-                    {% if perms.simpleapp.change_product %}
-                    <a href="{% url 'post_update' pk=post.id %}">Изменить</a>
+                    {% if perms.bullitenboard.post_edit %}
+                    <a href="{% url 'post_edit' pk=post.id %}">Изменить</a>
+                    <a href="{% url 'post_detail' pk=post.id %}">Просмотреть</a>
                     {% endif %}
                 </td>
            </tr>
