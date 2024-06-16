@@ -19,7 +19,7 @@ class PostList(ListView):
     paginate_by = 2  # количество записей на странице
 
     def __str__(self):
-        return
+        pass
 
         # Переопределяем функцию получения списка товаров
 
