@@ -10,7 +10,7 @@ Responses
 <!-- В контенте на странице мы выводим все объявления -->
 {% block content %}
    <h1>Отклики</h1>
-   {# Добавляем форму, которая объединяет набор полей, которые будут отправляться в запросе #}
+ {# Добавляем форму, которая объединяет набор полей, которые будут отправляться в запросе #}
    <form action="" method="get">
        {# Переменная, которую мы передали через контекст, может сгенерировать нам форму с полями #}
        {{ filterset.form.as_p }}
@@ -26,6 +26,7 @@ Responses
                <td width="150">Дата создания отклика</td>
                <td width="100">Автор</td>
                <td width="250">Действия</td>
+
            </tr>
            {% for response in responses %}
            <tr>
@@ -33,15 +34,12 @@ Responses
                <td>{{ response.text|safe }}</td>
                <td>{{ response.response_time|date:'d.m.Y' }}</td>
                <td>{{ response.author  }}</td>
-<!--               <td>-->
-<!--                    {# А здесь доступ для каждой ссылки теперь будем проверять отдельно #}-->
-<!--                    {% if response.status == False %}-->
-<!--                        <a href="{% url 'response_accept' response.pk %}">Принять</a>-->
-<!--                    {% else %}-->
-<!--                        <q>Принято</q>-->
-<!--                    {% endif %}-->
-<!--                    <a href="{% url 'response_delete' response.pk %}">Удалить</a>-->
-<!--                </td>-->
+               <td>
+                   {% if user == response.author %}
+                   <a href="{% url 'response_accept' pk=response.id %}">Принять</a>
+                   <a href="{% url 'response_delete' pk=response.id %}">Удалить</a>
+                   {% endif %}
+               </td>
            </tr>
            {% endfor %}
 

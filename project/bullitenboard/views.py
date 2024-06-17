@@ -1,12 +1,12 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import ListView,DetailView, CreateView, UpdateView
+from django.views.generic import ListView,DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
 
 from .forms import PostForm, UserResponseForm
 from .models import Post, UserResponse
-from .filters import PostFilter
+from .filters import PostFilter, ResponsesFilter
 class PostList(ListView):
     # Указываем модель, объекты которой мы будем выводить
     model = Post
@@ -48,6 +48,24 @@ class UserResponseList(ListView):
     context_object_name = 'responses'
     paginate_by = 2
 
+    def get_queryset(self):
+        # Получаем обычный запрос
+        queryset = super().get_queryset()
+        # Используем наш класс фильтрации.
+        # self.request.GET содержит объект QueryDict, который мы рассматривали
+        # в этом юните ранее.
+        # Сохраняем нашу фильтрацию в объекте класса,
+        # чтобы потом добавить в контекст и использовать в шаблоне.
+        self.filterset = ResponsesFilter(self.request.GET, queryset)
+        # Возвращаем из функции отфильтрованный список товаров
+        return self.filterset.qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Добавляем в контекст объект фильтрации.
+        context['filterset'] = self.filterset
+        return context
+
 class PostDetail(DetailView):
     # Модель всё та же, но мы хотим получать информацию по отдельному товару
     model = Post
@@ -83,5 +101,18 @@ class ResponseCreate(LoginRequiredMixin, CreateView):
     form_class = UserResponseForm
     model = UserResponse
     template_name = 'response_create.html'
-    success_url = reverse_lazy('posts')
+    success_url = reverse_lazy('post')
     permission_required = ('bullitenboard.create_response')
+
+class ResponseAccept(LoginRequiredMixin, UpdateView):
+    raise_exception = True
+    form_class = UserResponseForm
+    model = UserResponse
+    template_name = 'response_accept.html'
+    success_url = reverse_lazy('responses')
+
+class ResponseDelete(LoginRequiredMixin, DeleteView):
+    raise_exception = True
+    model = UserResponse
+    template_name = 'response_delete.html'
+    success_url = reverse_lazy('responses')

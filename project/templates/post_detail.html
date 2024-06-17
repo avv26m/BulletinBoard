@@ -14,10 +14,11 @@ Post
                <td>Название</td>
                <td>Описание</td>
                <td>Категория</td>
+               <td>Автор</td>
                <td>Дата</td>
 
                 {# Условие получается составным. #}
-                {% if perms.bullitenboard.post_create%}
+                {% if user.is_authenticated%}
                 <td>Действия</td>
                 {% endif %}
            </tr>
@@ -35,10 +36,11 @@ Post
                <td>{{ post_detail.title }}</td>
                <td>{{ post_detail.text }}</td>
                <td>{{ post_detail.category }}</td>
+               <td>{{ post_detail.author}}</td>
                <td>{{ post_detail.dateCreation }}</td>
                <td>
                     {# А здесь доступ для каждой ссылки теперь будем проверять отдельно #}
-                    {% if perms.bullitenboard.post_edit %}
+                    {% if user != post_detail.author %}
                     <a href="{% url 'response_create' pk=post_detail.id %}">Откликнуться</a>
                     {% endif %}
                 </td>

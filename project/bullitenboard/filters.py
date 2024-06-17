@@ -1,5 +1,5 @@
 from django_filters import FilterSet
-from .models import Post
+from .models import Post, UserResponse
 
 # Создаем свой набор фильтров для модели Product.
 # FilterSet, который мы наследуем,
@@ -13,5 +13,13 @@ class PostFilter(FilterSet):
        # будет производиться фильтрация.
        fields = {
            # поиск по названию
-           'category': ['icontains'],
+           'title': ['icontains'],
        }
+
+class ResponsesFilter(FilterSet):
+    class Meta:
+
+        model = UserResponse
+        fields = {
+            'text': ['icontains']
+        }

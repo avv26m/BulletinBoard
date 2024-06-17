@@ -25,6 +25,7 @@ Post
                <td>Название</td>
                <td>Описание</td>
                <td>Категория</td>
+               <td>Автор</td>
                <td>Дата</td>
 
                 {# Условие получается составным. #}
@@ -46,6 +47,7 @@ Post
                <td>{{ post.title }}</td>
                <td>{{ post.text }}</td>
                <td>{{ post.category }}</td>
+               <td>{{post.author }}</td>
                <td>{{post.dateCreation}}</td>
                <td>
                     {# А здесь доступ для каждой ссылки теперь будем проверять отдельно #}
