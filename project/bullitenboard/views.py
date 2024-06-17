@@ -48,15 +48,10 @@ class UserResponseList(ListView):
     context_object_name = 'responses'
     paginate_by = 2
 
+    # Переопределяем функцию получения списка товаров
     def get_queryset(self):
-        # Получаем обычный запрос
-        queryset = super().get_queryset()
-        # Используем наш класс фильтрации.
-        # self.request.GET содержит объект QueryDict, который мы рассматривали
-        # в этом юните ранее.
-        # Сохраняем нашу фильтрацию в объекте класса,
-        # чтобы потом добавить в контекст и использовать в шаблоне.
-        self.filterset = ResponsesFilter(self.request.GET, queryset)
+        queryset = UserResponse.objects.filter(post__author__id=self.request.user.id)
+        self.filterset = ResponsesFilter(self.request.GET, queryset, request=self.request.user.id)
         # Возвращаем из функции отфильтрованный список товаров
         return self.filterset.qs
 

@@ -35,7 +35,7 @@ Responses
                <td>{{ response.response_time|date:'d.m.Y' }}</td>
                <td>{{ response.author  }}</td>
                <td>
-                   {% if user == response.author %}
+                   {% if user != response.author %}
                    <a href="{% url 'response_accept' pk=response.id %}">Принять</a>
                    <a href="{% url 'response_delete' pk=response.id %}">Удалить</a>
                    {% endif %}

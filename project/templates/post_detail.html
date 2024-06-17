@@ -18,7 +18,7 @@ Post
                <td>Дата</td>
 
                 {# Условие получается составным. #}
-                {% if user.is_authenticated%}
+                {% if user != post_detail.author%}
                 <td>Действия</td>
                 {% endif %}
            </tr>
@@ -41,7 +41,7 @@ Post
                <td>
                     {# А здесь доступ для каждой ссылки теперь будем проверять отдельно #}
                     {% if user != post_detail.author %}
-                    <a href="{% url 'response_create' pk=post_detail.id %}">Откликнуться</a>
+                    <a href="{% url 'response_create' post_detail.pk %}">Откликнуться</a>
                     {% endif %}
                 </td>
            </tr>

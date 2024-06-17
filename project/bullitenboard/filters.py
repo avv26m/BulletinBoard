@@ -21,5 +21,9 @@ class ResponsesFilter(FilterSet):
 
         model = UserResponse
         fields = {
-            'text': ['icontains']
+            'post'
         }
+
+    def __init__(self, *args, **kwargs):
+        super(ResponsesFilter, self).__init__(*args, **kwargs)
+        self.filters['post'].queryset = Post.objects.filter(author__id=kwargs['request'])

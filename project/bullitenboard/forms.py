@@ -28,4 +28,5 @@ class PostForm(forms.ModelForm):
 class UserResponseForm(forms.ModelForm):
     class Meta:
         model = UserResponse
-        fields = '__all__'
+        fields = ['text', ]
+
