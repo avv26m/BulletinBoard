@@ -58,7 +58,7 @@ class PostDetail(DetailView):
 
 
 # Добавляем новое представление для создания товаров.
-class PostCreate(PermissionRequiredMixin,  CreateView):
+class PostCreate(PermissionRequiredMixin, LoginRequiredMixin,  CreateView):
     raise_exception = True
     # Указываем нашу разработанную форму
     form_class = PostForm
@@ -66,9 +66,9 @@ class PostCreate(PermissionRequiredMixin,  CreateView):
     model = Post
     # и новый шаблон, в котором используется форма.
     template_name = 'post_create.html'
-    permission_required = ('bullitenboard.post_create')
+    permission_required = ('bullitenboard.add_post')
 
-class PostEdit(PermissionRequiredMixin, UpdateView):
+class PostEdit(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
     # Указываем нашу разработанную форму
     form_class = PostForm
     # модель товаров
@@ -76,11 +76,12 @@ class PostEdit(PermissionRequiredMixin, UpdateView):
     # и новый шаблон, в котором используется форма.
     template_name = 'post_edit.html'
     success_url = reverse_lazy('post')
-    permission_required = ('bullitenboard.post_edit')
+    permission_required = ('bullitenboard.change_post')
 
-class ResponseCreate(PermissionRequiredMixin, CreateView):
+class ResponseCreate(LoginRequiredMixin, CreateView):
     raise_exception = True
     form_class = UserResponseForm
     model = UserResponse
     template_name = 'response_create.html'
     success_url = reverse_lazy('posts')
+    permission_required = ('bullitenboard.create_response')

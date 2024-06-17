@@ -15,7 +15,7 @@ Post
    </form>
    <hr>
 {# Теперь будем проверять не request.user.is_authenticated, а конкретные права #}
-    {% if perms.bullitenboar.post_create %}
+    {% if user.is_authenticated %}
     <a href="{% url 'post_create' %}">Добавить объявление</a>
     {% endif %}
 
@@ -28,7 +28,7 @@ Post
                <td>Дата</td>
 
                 {# Условие получается составным. #}
-                {% if perms.bullitenboard.post_create%}
+                {% if user.is_authenticated %}
                 <td>Действия</td>
                 {% endif %}
            </tr>
@@ -49,9 +49,9 @@ Post
                <td>{{post.dateCreation}}</td>
                <td>
                     {# А здесь доступ для каждой ссылки теперь будем проверять отдельно #}
-                    {% if perms.bullitenboard.post_edit %}
+                   <a href="{% url 'post_detail' pk=post.id %}">Просмотреть</a>
+                    {% if user == post.author %}
                     <a href="{% url 'post_edit' pk=post.id %}">Изменить</a>
-                    <a href="{% url 'post_detail' pk=post.id %}">Просмотреть</a>
                     {% endif %}
                 </td>
            </tr>
