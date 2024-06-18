@@ -52,6 +52,8 @@ class UserResponseList(ListView):
     def get_queryset(self):
         queryset = UserResponse.objects.filter(post__author__id=self.request.user.id)
         self.filterset = ResponsesFilter(self.request.GET, queryset, request=self.request.user.id)
+        if not self.request.GET:
+            return UserResponse.objects.none()
         # Возвращаем из функции отфильтрованный список товаров
         return self.filterset.qs
 
@@ -59,6 +61,7 @@ class UserResponseList(ListView):
         context = super().get_context_data(**kwargs)
         # Добавляем в контекст объект фильтрации.
         context['filterset'] = self.filterset
+        context['get'] = self.request.GET
         return context
 
 class PostDetail(DetailView):

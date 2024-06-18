@@ -28,5 +28,6 @@ class PostForm(forms.ModelForm):
 class UserResponseForm(forms.ModelForm):
     class Meta:
         model = UserResponse
-        fields = ['text', ]
+        fields = ['author', 'post', 'text']
+        labels = {'author': 'Автор', 'post': 'Коментарий', 'text': 'Содержание коментария'}
 
