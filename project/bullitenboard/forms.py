@@ -9,7 +9,9 @@ class PostForm(forms.ModelForm):
     text = forms.CharField(min_length=20)
     class Meta:
         model = Post
-        fields = '__all__'
+        fields = ['title','category', 'text']
+        labels = {'title':'Заголовок','category':'Категория', 'text':'Текст объявления'}
+
 
 
     def clean(self):
@@ -28,6 +30,6 @@ class PostForm(forms.ModelForm):
 class UserResponseForm(forms.ModelForm):
     class Meta:
         model = UserResponse
-        fields = ['author', 'post', 'text']
-        labels = {'author': 'Автор', 'post': 'Коментарий', 'text': 'Содержание коментария'}
+        fields = ['text']
+        labels = {'text': 'Содержание коментария'}
 

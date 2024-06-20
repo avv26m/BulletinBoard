@@ -84,6 +84,12 @@ class PostCreate(PermissionRequiredMixin, LoginRequiredMixin,  CreateView):
     template_name = 'post_create.html'
     permission_required = ('bullitenboard.add_post')
 
+    def form_valid(self, fors):
+        post = fors.save(commit=False)
+        post.author = self.request.user
+        post.save()
+        return super().form_valid(fors)
+
 class PostEdit(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
     # Указываем нашу разработанную форму
     form_class = PostForm
@@ -101,6 +107,13 @@ class ResponseCreate(LoginRequiredMixin, CreateView):
     template_name = 'response_create.html'
     success_url = reverse_lazy('post')
     permission_required = ('bullitenboard.create_response')
+
+    def form_valid(self, fors):
+        response = fors.save(commit=False)
+        response.author = self.request.user
+        response.post_id = self.kwargs['pk']
+        response.save()
+        return super().form_valid(fors)
 
 class ResponseAccept(LoginRequiredMixin, UpdateView):
     raise_exception = True
