@@ -36,9 +36,11 @@ Responses
                <td>{{ response.response_time|date:'d.m.Y' }}</td>
                <td>{{ response.author  }}</td>
                <td>
-                   {% if user != response.author %}
+                   {% if user != response.author and response.status != True %}
                    <a href="{% url 'response_accept' pk=response.id %}">Принять</a>
                    <a href="{% url 'response_delete' pk=response.id %}">Удалить</a>
+                   {% else %}
+                   <p>Отклик принят</p>
                    {% endif %}
                </td>
            </tr>

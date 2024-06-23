@@ -4,7 +4,7 @@ from django.views.generic import ListView,DetailView, CreateView, UpdateView, De
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
 
-from .forms import PostForm, UserResponseForm
+from .forms import PostForm, UserResponseForm, AcceptResponseForm
 from .models import Post, UserResponse
 from .filters import PostFilter, ResponsesFilter
 class PostList(ListView):
@@ -117,7 +117,7 @@ class ResponseCreate(LoginRequiredMixin, CreateView):
 
 class ResponseAccept(LoginRequiredMixin, UpdateView):
     raise_exception = True
-    form_class = UserResponseForm
+    form_class = AcceptResponseForm
     model = UserResponse
     template_name = 'response_accept.html'
     success_url = reverse_lazy('responses')
