@@ -152,14 +152,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = "/board/"
 LOGOUT_REDIRECT_URL = "/board/"
 
+AUTH_USER_MODEL = 'bullitenboard.USER'
 
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_EMAIL_VERIFICATION = 'none'
 
-ACCOUNT_FORMS = {"signup": "accounts.forms.CustomSignupForm"}
+ACCOUNT_FORMS = {"signup": "bullitenboard.forms.CommonSignupForm"}
 
 # Настройки для рассылки писем
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

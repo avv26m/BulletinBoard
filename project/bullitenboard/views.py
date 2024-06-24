@@ -1,11 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView,DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
 
 from .forms import PostForm, UserResponseForm, AcceptResponseForm
-from .models import Post, UserResponse
+from .models import Post, UserResponse, User
 from .filters import PostFilter, ResponsesFilter
 class PostList(ListView):
     # Указываем модель, объекты которой мы будем выводить
@@ -127,3 +127,17 @@ class ResponseDelete(LoginRequiredMixin, DeleteView):
     model = UserResponse
     template_name = 'response_delete.html'
     success_url = reverse_lazy('responses')
+
+class ConfirmUser(UpdateView):
+    model = User
+    context_object_name = 'confirm_user'
+
+    def post(self, request, *args, **kwargs):
+        if 'code' in request.POST:
+            user = User.objects.filter(code=request.POST['code'])
+            if user.exists():
+                user.update(is_active=True)
+                user.update(code=None)
+            else:
+                return render(self.request, 'users/invalide_code.html')
+        return redirect('account_login')

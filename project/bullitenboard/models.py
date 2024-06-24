@@ -1,9 +1,11 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from django.urls import reverse
 
 from ckeditor_uploader.fields import RichTextUploadingField
 
+class User(AbstractUser):
+    code = models.CharField(max_length=15, blank=True, null=True)
 class Post(models.Model):
     CATEGORY_CHOICES = [
         ('tank', 'Танки'),

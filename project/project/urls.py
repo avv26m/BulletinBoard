@@ -25,4 +25,5 @@ urlpatterns = [
     path('board/', include('bullitenboard.urls')),
     # страница вхожа
     path("accounts/", include("allauth.urls")),  # Добавили эту строчку
+
 ]
