@@ -1,10 +1,15 @@
 {% extends 'flatpages/default.html' %}
 
 {% block content %}
+{% load static %}
+<script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+<script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+
 <h1>Добавит отклик:</h1>
 <hr>
 <form action="" method="post">
     {% csrf_token %}
+    {{ form.media }}
     {{ form.as_p }}
     <input type="submit" value="Save" />
 </form>

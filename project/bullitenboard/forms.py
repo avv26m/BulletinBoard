@@ -1,26 +1,22 @@
 import random
 from string import hexdigits
 
-from ckeditor.widgets import CKEditorWidget
 from django import forms
 from django.core.exceptions import ValidationError
 from allauth.account.forms import SignupForm
 from django.core.mail import send_mail
 
 from .models import Post, UserResponse
-from project import settings
+from django.conf import settings
 
 
 class PostForm(forms.ModelForm):
-    text = forms.CharField(min_length=20)
+    # text = forms.CharField(min_length=20)
     class Meta:
         model = Post
         fields = ['title','category', 'text']
         labels = {'title':'Заголовок','category':'Категория', 'text':'Текст объявления'}
 
-        widgets = {
-            'content': forms.CharField(widget=CKEditorWidget())
-        }
 
     def clean(self):
         cleaned_data = super().clean()
