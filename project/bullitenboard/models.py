@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.urls import reverse
 
-from ckeditor_uploader.fields import RichTextUploadingField
 
 class User(AbstractUser):
     code = models.CharField(max_length=15, blank=True, null=True)

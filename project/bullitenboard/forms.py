@@ -1,6 +1,7 @@
 import random
 from string import hexdigits
 
+from ckeditor.widgets import CKEditorWidget
 from django import forms
 from django.core.exceptions import ValidationError
 from allauth.account.forms import SignupForm
@@ -17,7 +18,9 @@ class PostForm(forms.ModelForm):
         fields = ['title','category', 'text']
         labels = {'title':'Заголовок','category':'Категория', 'text':'Текст объявления'}
 
-
+        widgets = {
+            'content': forms.CharField(widget=CKEditorWidget())
+        }
 
     def clean(self):
         cleaned_data = super().clean()

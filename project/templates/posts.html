@@ -45,7 +45,7 @@ Post
                 полям объекта модели. Например, здесь мы выводим имя,
                 в следующем столбце описание, и т.д.  -->
                <td>{{ post.title }}</td>
-               <td>{{ post.text }}</td>
+               <td>{{ post.text| safe }}</td>
                <td>{{ post.category }}</td>
                <td>{{post.author }}</td>
                <td>{{post.dateCreation}}</td>
