@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.yandex',
-    'ckeditor',
+    'django_ckeditor_5',
     'ckeditor_uploader',
 
 ]
@@ -151,9 +151,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
 
+
+
+
 CKEDITOR_CONFIGS = {
     'default': {
-
         'skin': 'moono-lisa',
         # 'skin': 'office2013',
         'toolbar_Basic': [

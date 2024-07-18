@@ -7,13 +7,14 @@ from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 class PostAdminForm(forms.ModelForm):
     text = forms.CharField(label='Описание',widget=CKEditorUploadingWidget())
+
     class Meta:
         model = Post
         fields = '__all__'
 
 class PostAdmin(admin.ModelAdmin):
     form = PostAdminForm
-
+    list_display = ['title', 'category', 'dateCreation', 'author']
 
 
 admin.site.register(Post, PostAdmin)
