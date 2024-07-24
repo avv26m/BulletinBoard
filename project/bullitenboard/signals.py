@@ -1,7 +1,12 @@
+from django.db.models.signals import m2m_changed
+from django.dispatch import receiver
 from django.conf import settings
 from django.core.mail import send_mail
-from .models import UserResponse
+from .models import UserResponse, Post
 
+
+
+@receiver(m2m_changed, sender=Post)
 def create_new_response(pk):
     response = UserResponse.objects.get(id=pk)
     send_mail(
@@ -13,7 +18,7 @@ def create_new_response(pk):
         recipient_list=[response.post.author.email, ],
     )
 
-
+@receiver(m2m_changed, sender=Post)
 def accept_response_message(pk):
     response = UserResponse.objects.get(id=pk)
     send_mail(
